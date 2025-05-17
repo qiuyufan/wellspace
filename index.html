@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellSpace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Screen -->
+        <div class="screen" id="home-screen">
+            <!-- Personalized Alert Banner -->
+            <div class="alert-banner">
+                <div class="alert-icon">
+                    <i class="fas fa-wind"></i>
+                </div>
+                <div class="alert-text">
+                    <p>Air quality is good, perfect time for an outdoor break!</p>
+                </div>
+            </div>
+            
+            <div class="mode-toggle">
+                <div class="toggle-container">
+                    <div class="toggle-option active" data-mode="work">Work Mode</div>
+                    <div class="toggle-option" data-mode="break">Recovery Mode</div>
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="recovery-score-container">
+                <div class="recovery-score">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="progress-fill" cx="50" cy="50" r="45" stroke-dasharray="283" stroke-dashoffset="70"></circle>
+                        <text x="50" y="45" class="score-text">75%</text>
+                        <text x="50" y="60" class="score-label">Well-Being Index</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Daily Mood Tracker -->
+            <div class="mood-tracker">
+                <div class="widget-header">
+                    <h3>How are you feeling today?</h3>
+                </div>
+                <div class="mood-slider">
+                    <div class="mood-emoji-container">
+                        <div class="mood-emoji" data-mood="1"><i class="far fa-sad-tear"></i></div>
+                        <div class="mood-emoji" data-mood="2"><i class="far fa-frown"></i></div>
+                        <div class="mood-emoji" data-mood="3"><i class="far fa-meh"></i></div>
+                        <div class="mood-emoji" data-mood="4"><i class="far fa-smile"></i></div>
+                        <div class="mood-emoji active" data-mood="5"><i class="far fa-grin"></i></div>
+                    </div>
+                    <input type="range" min="1" max="5" value="5" class="mood-range">
+                </div>
+            </div>
+
+            <div class="env-data-widget">
+                <div class="widget-header">
+                    <h3>Environment Data</h3>
+                    <div class="data-source">
+                        <i class="fas fa-satellite"></i>
+                        <span>Satellite Data</span>
+                    </div>
+                </div>
+                <div class="env-data-grid">
+                    <div class="env-data-item">
+                        <div class="env-data-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="env-data-info">
+                            <span class="env-data-label">Air Quality</span>
+                            <span class="env-data-value">Good (NO₂: 15μg/m³)</span>
+                            <span class="data-source-label">Powered by Copernicus Sentinel-5P</span>
+                        </div>
+                    </div>
+                    <div class="env-data-item">
+                        <div class="env-data-icon">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <div class="env-data-info">
+                            <span class="env-data-label">Temperature</span>
+                            <span class="env-data-value">72°F / 22°C</span>
+                            <span class="data-source-label">Real-time from Copernicus and OpenWeather</span>
+                        </div>
+                    </div>
+                    <div class="env-data-item">
+                        <div class="env-data-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="env-data-info">
+                            <span class="env-data-label">Green Space</span>
+                            <span class="env-data-value">3 parks nearby</span>
+                            <span class="data-source-label">Sentinel-2 NDVI Analysis</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="refresh-data-btn">
+                    <i class="fas fa-sync-alt"></i>
+                    Update with Live Space Data
+                </button>
+            </div>
+
+            <div class="suggestion-card">
+                <div class="suggestion-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="suggestion-text">
+                    <h3>Perfect time for a sunlight walk!</h3>
+                    <p>UV is moderate and there's a park nearby.</p>
+                </div>
+            </div>
+            
+            <!-- Well-Being Services Near You -->
+            <div class="nearby-services">
+                <div class="widget-header">
+                    <h3>Well-Being Services Near You</h3>
+                </div>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Calm Café</h4>
+                            <p>0.2 miles away</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Central Park</h4>
+                            <p>0.3 miles away</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Yoga Studio</h4>
+                            <p>0.5 miles away</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Relaxation Zone</h4>
+                            <p>0.4 miles away</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="log-break">
+                    <i class="fas fa-clipboard-check"></i>
+                    Log Recovery Activity
+                </button>
+                <button class="action-btn" id="find-park">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Find Well-Being Services
+                </button>
+                <button class="action-btn" id="view-history">
+                    <i class="fas fa-chart-line"></i>
+                    View My Progress
+                </button>
+                <button class="action-btn" id="api-settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Notification Popup -->
+        <div class="notification-popup" id="notification">
+            <div class="notification-content">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="notification-text">
+                    <h3>Time for a break!</h3>
+                    <p>You haven't taken a break in 3 hours. Take a 10-min walk in fresh air at Golden Gate Park.</p>
+                </div>
+                <div class="notification-actions">
+                    <button class="notification-btn primary">Take a Break</button>
+                    <button class="notification-btn secondary">Remind Later</button>
+                </div>
+                <button class="notification-close">&times;</button>
+            </div>
+        </div>
+
+        <!-- Break Recommendation Screen -->
+        <div class="screen" id="break-recommendation-screen">
+            <div class="screen-header">
+                <button class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Break Recommendations</h2>
+            </div>
+
+            <div class="recommendation-card">
+                <div class="recommendation-header">
+                    <div class="recommendation-title">
+                        <h3>Now's the perfect time for a daylight walk</h3>
+                        <div class="data-source small">
+                            <i class="fas fa-satellite"></i>
+                            <span>Powered by Copernicus Satellite Data</span>
+                        </div>
+                    </div>
+                    <div class="recommendation-icon">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                </div>
+                
+                <div class="recommendation-details">
+                    <div class="detail-item">
+                        <i class="fas fa-sun"></i>
+                        <span>UV is moderate</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-wind"></i>
+                        <span>Air quality is good</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Park 300 meters away</span>
+                    </div>
+                </div>
+                
+                <div class="recommendation-actions">
+                    <button class="recommendation-btn primary">Start Break Now</button>
+                    <button class="recommendation-btn secondary">View on Map</button>
+                </div>
+            </div>
+
+            <div class="alternative-recommendations">
+                <h3>Alternative Options</h3>
+                
+                <div class="alt-recommendation-item">
+                    <div class="alt-recommendation-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="alt-recommendation-text">
+                        <h4>Outdoor coffee break</h4>
+                        <p>15 minutes at nearby café with outdoor seating</p>
+                    </div>
+                </div>
+                
+                <div class="alt-recommendation-item">
+                    <div class="alt-recommendation-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <div class="alt-recommendation-text">
+                        <h4>Sunlight exposure</h4>
+                        <p>10 minutes by the window for vitamin D</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Settings Screen -->
+        <div class="screen" id="api-settings-screen">
+            <div class="screen-header">
+                <button class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>API Settings</h2>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-header">
+                    <h3>Copernicus Data Space Ecosystem</h3>
+                    <div class="connection-status connected">
+                        <i class="fas fa-circle"></i>
+                        <span>Connected</span>
+                    </div>
+                </div>
+                
+                <div class="api-endpoint">
+                    <div class="endpoint-label">API Endpoint:</div>
+                    <div class="endpoint-value">https://catalogue.dataspace.copernicus.eu/odata/v1/Products</div>
+                </div>
+                
+                <div class="settings-toggle">
+                    <div class="toggle-label">Use Live Satellite Data</div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div class="settings-toggle">
+                    <div class="toggle-label">Background Data Updates</div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                
+                <div class="data-sources-list">
+                    <div class="data-source-item">
+                        <div class="data-source-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="data-source-info">
+                            <div class="data-source-name">UV Index</div>
+                            <div class="data-source-detail">Sentinel-5P</div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-source-item">
+                        <div class="data-source-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="data-source-info">
+                            <div class="data-source-name">Air Quality</div>
+                            <div class="data-source-detail">Sentinel-5P NO₂ Data</div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-source-item">
+                        <div class="data-source-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="data-source-info">
+                            <div class="data-source-name">Green Spaces</div>
+                            <div class="data-source-detail">Sentinel-2 + OpenStreetMap</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="settings-btn">
+                <i class="fas fa-sync-alt"></i>
+                Test Connection
+            </button>
+        </div>
+
+        <!-- Map View -->
+        <div class="screen" id="map-screen">
+            <div class="screen-header">
+                <button class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Nearby Nature Spots</h2>
+            </div>
+
+            <div class="map-filters">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Quiet Places</button>
+                <button class="filter-btn">Sunlight Exposure</button>
+            </div>
+
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <!-- Map background image -->
+                    <div class="user-location">
+                        <div class="pulse"></div>
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    
+                    <!-- Park markers -->
+                    <div class="park-marker" style="top: 30%; left: 25%;">
+                        <i class="fas fa-tree"></i>
+                        <div class="park-tooltip">Central Park<br>0.3 miles</div>
+                    </div>
+                    
+                    <div class="park-marker" style="top: 45%; left: 70%;">
+                        <i class="fas fa-tree"></i>
+                        <div class="park-tooltip">Riverside Park<br>0.5 miles</div>
+                    </div>
+                    
+                    <div class="park-marker" style="top: 65%; left: 40%;">
+                        <i class="fas fa-tree"></i>
+                        <div class="park-tooltip">Green Meadows<br>0.7 miles</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-details">
+                <div class="park-card">
+                    <div class="park-image"></div>
+                    <div class="park-info">
+                        <h3>Central Park</h3>
+                        <p><i class="fas fa-map-pin"></i> 0.3 miles away</p>
+                        <div class="park-features">
+                            <span><i class="fas fa-sun"></i> Good sunlight</span>
+                            <span><i class="fas fa-volume-down"></i> Moderate noise</span>
+                        </div>
+                        <button class="directions-btn">Get Directions</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Explore</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Stats</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
