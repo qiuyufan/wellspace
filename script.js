@@ -88,6 +88,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('home-screen').style.display = 'block';
             } else if (index === 1) { // Explore/Map
                 document.getElementById('map-screen').style.display = 'block';
+// Initialize basemap layers
+var Esri_WorldImagery = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution:
+        "Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    }
+  );
+  
+  var osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 13,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  });
+  
+  // Center map on fallback location (Tikkurila, Finland)
+  var map = L.map("map-container", {
+    center: [60.2936799449855, 25.03791060213742],
+    zoom: 13,
+    layers: [Esri_WorldImagery],
+  });
+  
+  // Basemap switch control
+  var baseMaps = {
+    OpenStreetMap: osm,
+    "Esri Imagery": Esri_WorldImagery,
+  };
+  
+  L.control.layers(baseMaps).addTo(map);
+  
+  // Handle successful geolocation
+  function onLocationFound(e) {
+    console.log(e);
+    L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
+  }
+  
+  // Handle location error (fallback to Tikkurila)
+  function onLocationError(e) {
+    console.log("Location error, using fallback.");
+    L.marker({ lat: 60.2936799449855, lng: 25.03791060213742 })
+      .addTo(map)
+      .bindPopup("You are here")
+      .openPopup();
+  }
+  
+  map.on("locationerror", onLocationError);
+  map.on("locationfound", onLocationFound);
+  map.locate({ setView: true, maxZoom: 13 });
+  
+  // Example mock green area marker (for demo purposes)
+  var marker = L.marker([60.295909, 25.054193])
+    .bindPopup("Green Area (mock)")
+    .addTo(map);
+
+  // ---
+  // If Sentinel-2 NDVI data were used:
+  // 1. Send POST request to Copernicus Dataspace API
+  // 2. Use Evalscript to calculate NDVI (index(B08, B04))
+  // 3. Parse GeoTIFF to extract NDVI values and coordinates
+  // 4. Filter highest NDVI areas and display as green markers
+  //
+  // This is mocked for the demo since full NDVI analysis requires more time and backend processing.
+  // ---
             }
             // Other screens would be added here
         });
@@ -172,67 +235,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-// Initialize basemap layers
-var Esri_WorldImagery = L.tileLayer(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    {
-      attribution:
-        "Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
-    }
-  );
-  
-  var osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  });
-  
-  // Center map on fallback location (Tikkurila, Finland)
-  var map = L.map("map-container", {
-    center: [60.2936799449855, 25.03791060213742],
-    zoom: 15,
-    layers: [Esri_WorldImagery],
-  });
-  
-  // Basemap switch control
-  var baseMaps = {
-    OpenStreetMap: osm,
-    "Esri Imagery": Esri_WorldImagery,
-  };
-  
-  L.control.layers(baseMaps).addTo(map);
-  
-  // Handle successful geolocation
-  function onLocationFound(e) {
-    console.log(e);
-    L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
-  }
-  
-  // Handle location error (fallback to Tikkurila)
-  function onLocationError(e) {
-    console.log("Location error, using fallback.");
-    L.marker({ lat: 60.2936799449855, lng: 25.03791060213742 })
-      .addTo(map)
-      .bindPopup("You are here")
-      .openPopup();
-  }
-  
-  map.on("locationerror", onLocationError);
-  map.on("locationfound", onLocationFound);
-  map.locate({ setView: true, maxZoom: 15 });
-  
-  // Example mock green area marker (for demo purposes)
-  var marker = L.marker([60.295909, 25.054193])
-    .bindPopup("Green Area (mock)")
-    .addTo(map);
 
-  // ---
-  // If Sentinel-2 NDVI data were used:
-  // 1. Send POST request to Copernicus Dataspace API
-  // 2. Use Evalscript to calculate NDVI (index(B08, B04))
-  // 3. Parse GeoTIFF to extract NDVI values and coordinates
-  // 4. Filter highest NDVI areas and display as green markers
-  //
-  // This is mocked for the demo since full NDVI analysis requires more time and backend processing.
-  // ---
 });
