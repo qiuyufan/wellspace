@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WellSpace</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -27,17 +28,6 @@
                     <div class="toggle-option active" data-mode="work">Work Mode</div>
                     <div class="toggle-option" data-mode="break">Recovery Mode</div>
                     <div class="toggle-slider"></div>
-                </div>
-            </div>
-
-            <div class="recovery-score-container">
-                <div class="recovery-score">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
-                        <circle class="progress-fill" cx="50" cy="50" r="45" stroke-dasharray="283" stroke-dashoffset="70"></circle>
-                        <text x="50" y="45" class="score-text">75%</text>
-                        <text x="50" y="60" class="score-label">Well-Being Index</text>
-                    </svg>
                 </div>
             </div>
 
@@ -359,31 +349,7 @@
                 <button class="filter-btn">Sunlight Exposure</button>
             </div>
 
-            <div class="map-container">
-                <div class="map-placeholder">
-                    <!-- Map background image -->
-                    <div class="user-location">
-                        <div class="pulse"></div>
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    
-                    <!-- Park markers -->
-                    <div class="park-marker" style="top: 30%; left: 25%;">
-                        <i class="fas fa-tree"></i>
-                        <div class="park-tooltip">Central Park<br>0.3 miles</div>
-                    </div>
-                    
-                    <div class="park-marker" style="top: 45%; left: 70%;">
-                        <i class="fas fa-tree"></i>
-                        <div class="park-tooltip">Riverside Park<br>0.5 miles</div>
-                    </div>
-                    
-                    <div class="park-marker" style="top: 65%; left: 40%;">
-                        <i class="fas fa-tree"></i>
-                        <div class="park-tooltip">Green Meadows<br>0.7 miles</div>
-                    </div>
-                </div>
-            </div>
+            <div id="map-container" class="map-container"></div>
 
             <div class="map-details">
                 <div class="park-card">
@@ -421,7 +387,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

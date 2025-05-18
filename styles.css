@@ -1,10 +1,10 @@
 /* Base Styles */
 :root {
-    --primary-green: #5E9E8F; /* Calming teal-green */
-    --light-green: #A5D6A7;
-    --dark-green: #3B7D6F;
+    --primary-green: #9cf3ff; /* Calming teal-green */
+    --light-green: #abfcff;
+    --dark-green: #abf5ff;
     --light-blue: #B3E5FC;
-    --medium-blue: #81D4FA;
+    --medium-blue: #a6e3ff;
     --soft-blue: #C5E1F0;
     --warm-beige: #F5F0E5;
     --light-gray: #F7F9FC;
@@ -78,7 +78,7 @@ body {
 }
 
 .toggle-option.active {
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .toggle-slider {
@@ -527,10 +527,12 @@ body {
 
 .map-container {
     height: 300px;
+    /*
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 20px;
     position: relative;
+    */
 }
 
 .map-placeholder {

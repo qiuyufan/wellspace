@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update app theme based on mode
             const mode = this.getAttribute('data-mode');
             if (mode === 'work') {
-                document.documentElement.style.setProperty('--primary-green', '#5E9E8F');
+                document.documentElement.style.setProperty('--primary-green', '#9cf3ff');
             } else {
-                document.documentElement.style.setProperty('--primary-green', '#3B7D6F'); // Darker teal for recovery mode
+                document.documentElement.style.setProperty('--primary-green', '#9cf3ff'); // Darker teal for recovery mode
             }
         });
     });
@@ -51,10 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Show notification after 3 seconds for demo purposes
-    setTimeout(() => {
-        const notification = document.getElementById('notification');
-        notification.classList.add('show');
-    }, 3000);
+    //    const notification = document.getElementById('notification');
+    //    notification.classList.add('show');
+    //}, 3000);
     
     // Close notification
     const notificationClose = document.querySelector('.notification-close');
@@ -172,37 +171,68 @@ document.addEventListener('DOMContentLoaded', function() {
             // In a real app, this would filter the map markers
         });
     });
-    
-    // Simulate recovery score animation
-    const progressFill = document.querySelector('.progress-fill');
-    const scoreText = document.querySelector('.score-text');
-    
-    // Calculate stroke-dashoffset based on percentage (75%)
-    const circle = progressFill;
-    const radius = circle.getAttribute('r');
-    const circumference = 2 * Math.PI * radius;
-    const scorePercent = 75;
-    
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    const offset = circumference - (scorePercent / 100) * circumference;
-    circle.style.strokeDashoffset = offset;
-    
-    // For demo purposes, animate the score changing
-    let currentScore = 70;
-    const targetScore = 75;
-    
-    function updateScore() {
-        if (currentScore < targetScore) {
-            currentScore++;
-            scoreText.textContent = `${currentScore}%`;
-            
-            const newOffset = circumference - (currentScore / 100) * circumference;
-            circle.style.strokeDashoffset = newOffset;
-            
-            setTimeout(updateScore, 50);
-        }
+
+// Initialize basemap layers
+var Esri_WorldImagery = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution:
+        "Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
     }
-    
-    // Start the animation after a short delay
-    setTimeout(updateScore, 1000);
+  );
+  
+  var osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  });
+  
+  // Center map on fallback location (Tikkurila, Finland)
+  var map = L.map("map-container", {
+    center: [60.2936799449855, 25.03791060213742],
+    zoom: 15,
+    layers: [Esri_WorldImagery],
+  });
+  
+  // Basemap switch control
+  var baseMaps = {
+    OpenStreetMap: osm,
+    "Esri Imagery": Esri_WorldImagery,
+  };
+  
+  L.control.layers(baseMaps).addTo(map);
+  
+  // Handle successful geolocation
+  function onLocationFound(e) {
+    console.log(e);
+    L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
+  }
+  
+  // Handle location error (fallback to Tikkurila)
+  function onLocationError(e) {
+    console.log("Location error, using fallback.");
+    L.marker({ lat: 60.2936799449855, lng: 25.03791060213742 })
+      .addTo(map)
+      .bindPopup("You are here")
+      .openPopup();
+  }
+  
+  map.on("locationerror", onLocationError);
+  map.on("locationfound", onLocationFound);
+  map.locate({ setView: true, maxZoom: 15 });
+  
+  // Example mock green area marker (for demo purposes)
+  var marker = L.marker([60.295909, 25.054193])
+    .bindPopup("Green Area (mock)")
+    .addTo(map);
+
+  // ---
+  // If Sentinel-2 NDVI data were used:
+  // 1. Send POST request to Copernicus Dataspace API
+  // 2. Use Evalscript to calculate NDVI (index(B08, B04))
+  // 3. Parse GeoTIFF to extract NDVI values and coordinates
+  // 4. Filter highest NDVI areas and display as green markers
+  //
+  // This is mocked for the demo since full NDVI analysis requires more time and backend processing.
+  // ---
 });
